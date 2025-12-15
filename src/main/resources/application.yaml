@@ -1,0 +1,21 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ducami-project
+
+
+  datasource:
+    url: ${DB_URL:?DB_URL missing}
+    username: ${DB_USERNAME:?DB_USERNAME missing}
+    password: ${DB_PASSWORD:?DB_PASSWORD missing}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
