@@ -38,7 +38,7 @@ public class JwtProvider {
         catch (ExpiredJwtException e) {
             throw new AuthException(AuthStatusCode.EXPIRED_TOKEN);
         }
-        catch (IllegalArgumentException e) {
+        catch (IllegalArgumentException | SignatureException e) {
             throw new AuthException(AuthStatusCode.INVALID_JWT);
         }
         catch (MalformedJwtException e) {

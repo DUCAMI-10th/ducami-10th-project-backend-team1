@@ -3,16 +3,16 @@ package com.ducami.ducamiproject.domain.auth.controller;
 import com.ducami.ducamiproject.domain.auth.dto.request.LoginRequest;
 import com.ducami.ducamiproject.domain.auth.dto.request.SignupRequest;
 import com.ducami.ducamiproject.domain.auth.dto.response.LoginResponse;
+import com.ducami.ducamiproject.domain.auth.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.auth.service.AuthService;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.global.data.ApiResponse;
+import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,5 +30,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Valid LoginRequest request) {
         return ApiResponse.ok(authService.login(request.email(), request.password()));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserInfoResponse>> getUserInfo(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        return ApiResponse.ok(authService.getUserInfo(userDetails.getEmail()));
     }
 }
