@@ -3,9 +3,15 @@ package com.ducami.ducamiproject.domain.user.domain;
 import com.ducami.ducamiproject.domain.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor()
+@Builder
 public class UserEntity extends Base {
 
     @Column
