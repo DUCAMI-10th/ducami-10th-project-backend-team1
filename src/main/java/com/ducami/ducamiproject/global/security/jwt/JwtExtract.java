@@ -2,8 +2,9 @@ package com.ducami.ducamiproject.global.security.jwt;
 
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
-import com.ducami.ducamiproject.domain.enums.UserRole;
+import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.service.CustomUserDetailsService;
 import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import com.ducami.ducamiproject.global.security.jwt.enums.TokenType;
 import io.jsonwebtoken.Claims;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +23,7 @@ import org.springframework.util.StringUtils;
 public class JwtExtract {
 
     private final JwtProvider jwtProvider;
+    private final CustomUserDetailsService customUserDetailsService;
 
     public String extractTokenFromRequest(HttpServletRequest request) {
         return extractToken(request.getHeader(HttpHeaders.AUTHORIZATION));
@@ -32,11 +35,7 @@ public class JwtExtract {
         if (!checkTokenType(claims, TokenType.ACCESS)) {
             throw new AuthException(AuthStatusCode.INVALID_TOKEN_TYPE);
         }
-        UserRole userRole = UserRole.valueOf(claims.get("authority", String.class));
-        final UserEntity user = UserEntity.builder()
-                .role(userRole)
-                .build();
-        final CustomUserDetails details = new CustomUserDetails(user);
+        final UserDetails details = customUserDetailsService.loadUserByUsername(claims.getSubject());
 
         return new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
     }

@@ -3,7 +3,7 @@ package com.ducami.ducamiproject.global.security.jwt;
 
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
-import com.ducami.ducamiproject.domain.enums.UserRole;
+import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.security.jwt.config.JwtProperties;
 import com.ducami.ducamiproject.global.security.jwt.enums.TokenType;
 import io.jsonwebtoken.*;
@@ -46,13 +46,13 @@ public class JwtProvider {
         }
     }
 
-    public String generateToken(TokenType tokenType, String googleId, UserRole role, long expiration) {
+    public String generateToken(TokenType tokenType, String email, UserRole role, long expiration) {
         Instant now = Instant.now();
         return Jwts.builder()
                 .header()
                 .type("JWT")
                 .and()
-                .subject(googleId)
+                .subject(email)
                 .claim("token_type", tokenType.name())
                 .claim("authority", role.name())
                 .issuedAt(Date.from(now))
@@ -61,12 +61,12 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String generateAccessToken(String googleId, UserRole role) {
-        return generateToken(TokenType.ACCESS, googleId, role, jwtProperties.getAccessExpiration());
+    public String generateAccessToken(String email, UserRole role) {
+        return generateToken(TokenType.ACCESS, email, role, jwtProperties.getAccessExpiration());
     }
 
-    public String generateRefreshToken(String googleId, UserRole role) {
-        return generateToken(TokenType.REFRESH, googleId, role, jwtProperties.getRefreshExpiration());
+    public String generateRefreshToken(String email, UserRole role) {
+        return generateToken(TokenType.REFRESH, email, role, jwtProperties.getRefreshExpiration());
     }
 
 }

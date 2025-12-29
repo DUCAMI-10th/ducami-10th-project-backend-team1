@@ -1,6 +1,6 @@
 package com.ducami.ducamiproject.domain.user.domain;
 
-import com.ducami.ducamiproject.domain.enums.UserRole;
+import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +23,7 @@ public class UserEntity extends Base {
     @Column
     private String name;
 
-    @Column(name="role")
+    @Column(name="role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

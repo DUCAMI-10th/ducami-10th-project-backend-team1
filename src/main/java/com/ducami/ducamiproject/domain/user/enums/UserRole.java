@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.enums;
+package com.ducami.ducamiproject.domain.user.enums;
 
 public enum UserRole {
     ROLE_USER,

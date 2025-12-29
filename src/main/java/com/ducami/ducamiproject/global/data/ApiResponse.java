@@ -2,6 +2,7 @@ package com.ducami.ducamiproject.global.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
@@ -11,9 +12,21 @@ public record ApiResponse<T>(
     T data,
     ErrorResponse error
 ) {
-  public static <T> ApiResponse<T> ok(T data) {
-    return new ApiResponse<>(HttpStatus.OK.value(), data, null);
+  public static <T> ResponseEntity<ApiResponse<T>> of(T data, HttpStatus status) {
+    return ResponseEntity.status(status).body(new ApiResponse<>(status.value(), data, null));
   }
+
+  public static <T> ResponseEntity<ApiResponse<T>> ok(T data) {
+    return of(data, HttpStatus.OK);
+  }
+
+  public static <T> ResponseEntity<ApiResponse<T>> created(T data) {
+    return of(data, HttpStatus.CREATED);
+  }
+
+//  public static <T> ApiResponse<T> ok(T data) {
+//    return new ApiResponse<>(HttpStatus.OK.value(), data, null);
+//  }
 
   public static ApiResponse<Void> error(HttpStatus status, String code, String message) {
     return new ApiResponse<>(status.value(), null, ErrorResponse.of(code, message));
