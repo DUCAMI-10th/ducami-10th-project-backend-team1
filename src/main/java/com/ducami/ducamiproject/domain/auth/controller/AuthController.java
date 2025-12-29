@@ -2,6 +2,7 @@ package com.ducami.ducamiproject.domain.auth.controller;
 
 import com.ducami.ducamiproject.domain.auth.dto.request.LoginRequest;
 import com.ducami.ducamiproject.domain.auth.dto.request.SignupRequest;
+import com.ducami.ducamiproject.domain.auth.dto.request.UpdateUserRoleRequest;
 import com.ducami.ducamiproject.domain.auth.dto.response.LoginResponse;
 import com.ducami.ducamiproject.domain.auth.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.auth.service.AuthService;
@@ -37,5 +38,15 @@ public class AuthController {
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         return ApiResponse.ok(authService.getUserInfo(userDetails.getEmail()));
+    }
+
+    @PatchMapping("/{id}/role")
+    public ResponseEntity<ApiResponse<String>> updateUserRole(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateUserRoleRequest request
+    ) {
+        authService.updateUserRole(id, request.role());
+        return ApiResponse.ok("권한이 성고적으로 변경되었습니다.");
     }
 }

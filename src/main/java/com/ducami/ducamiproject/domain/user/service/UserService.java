@@ -26,6 +26,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<UserEntity> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
     public UserEntity save(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }

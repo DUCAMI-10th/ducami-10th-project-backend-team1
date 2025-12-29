@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class UserInfoResponse {
+    Long id;
     String name;
     String email;
     Integer grade;
@@ -16,7 +17,9 @@ public class UserInfoResponse {
     UserRole role;
 
     public static UserInfoResponse from(UserEntity entity) {
-        return new UserInfoResponse(entity.getName(),
+        return new UserInfoResponse(
+                entity.getId(),
+                entity.getName(),
                 entity.getEmail(),
                 entity.getGrade(),
                 entity.getGeneration(),

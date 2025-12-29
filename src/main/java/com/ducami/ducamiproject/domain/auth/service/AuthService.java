@@ -10,6 +10,7 @@ import com.ducami.ducamiproject.domain.user.exception.UserException;
 import com.ducami.ducamiproject.domain.user.exception.UserStatusCode;
 import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.global.security.jwt.JwtProvider;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +38,7 @@ public class AuthService {
 
     public LoginResponse login(String email, String password) {
         UserEntity user = userService.findByEmail(email)
-                .orElseThrow(() -> new AuthException(AuthStatusCode.INVALID_CREDENTIALS));
+            .orElseThrow(() -> new AuthException(AuthStatusCode.INVALID_CREDENTIALS));
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new AuthException(AuthStatusCode.INVALID_CREDENTIALS);
         }
@@ -49,7 +50,15 @@ public class AuthService {
 
     public UserInfoResponse getUserInfo(String email) {
         UserEntity user = userService.findByEmail(email)
-                .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
+            .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
         return UserInfoResponse.from(user);
+    }
+
+    @Transactional
+    public void updateUserRole(Long id, UserRole userRole) {
+        UserEntity user = userService.findById(id)
+            .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
+        user.setRole(userRole);
+        userService.save(user);
     }
 }
