@@ -1,5 +1,6 @@
 package com.ducami.ducamiproject.domain.auth.controller;
 
+import com.ducami.ducamiproject.domain.admin.log.annotation.FirstAnnotation;
 import com.ducami.ducamiproject.domain.auth.dto.request.LoginRequest;
 import com.ducami.ducamiproject.domain.auth.dto.request.SignupRequest;
 import com.ducami.ducamiproject.domain.auth.dto.request.UpdateUserRoleRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
 
+    @FirstAnnotation
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<String>> signup(@RequestBody @Valid SignupRequest request) {
         authService.signup(request.name(), request.email(), request.password());
