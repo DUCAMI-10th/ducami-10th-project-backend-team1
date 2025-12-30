@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "admin_log")
 @Getter
 @Setter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
@@ -33,5 +33,5 @@ public class AdminLogEntity {
 
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "u_id")
-    private UserEntity user;
+    private UserEntity actor;
 }

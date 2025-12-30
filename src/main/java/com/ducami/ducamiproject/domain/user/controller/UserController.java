@@ -1,5 +1,9 @@
 package com.ducami.ducamiproject.domain.user.controller;
 
+import com.ducami.ducamiproject.domain.admin.log.annotation.AdminLog;
+import com.ducami.ducamiproject.domain.admin.log.annotation.LogTargetId;
+import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
+import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.user.dto.request.UpdateUserRoleRequest;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.service.UserService;
@@ -25,12 +29,13 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/role")
+    @AdminLog(action = AdminAction.CHANGE_ROLE, target = TargetType.USER)
     public ResponseEntity<ApiResponse<String>> updateUserRole(
-            @PathVariable Long id,
+            @PathVariable @LogTargetId Long id,
             @RequestBody @Valid UpdateUserRoleRequest request
     ) {
         userService.updateUserRole(id, request.role());
-        return ApiResponse.ok("권한이 성고적으로 변경되었습니다.");
+        return ApiResponse.ok("권한이 성공적으로 변경되었습니다.");
     }
 
 }

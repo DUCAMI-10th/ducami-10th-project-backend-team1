@@ -1,5 +1,8 @@
 package com.ducami.ducamiproject.domain.admin.log.annotation;
 
+import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
+import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,6 +10,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FirstAnnotation {
-    String value() default "ㅎㅇ";
+public @interface AdminLog {
+    AdminAction action() default AdminAction.CREATE;
+    TargetType target() default TargetType.USER;
 }
