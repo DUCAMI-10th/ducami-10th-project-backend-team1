@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.auth.dto.request;
+package com.ducami.ducamiproject.domain.user.dto.request;
 
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import jakarta.validation.constraints.NotNull;

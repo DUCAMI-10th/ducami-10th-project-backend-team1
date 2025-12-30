@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.auth.dto.response;
+package com.ducami.ducamiproject.domain.user.dto.response;
 
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;

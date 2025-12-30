@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.domain.auth.service;
 
 import com.ducami.ducamiproject.domain.auth.dto.response.LoginResponse;
-import com.ducami.ducamiproject.domain.auth.dto.response.UserInfoResponse;
+import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
@@ -12,7 +12,6 @@ import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.global.security.jwt.JwtProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,17 +47,5 @@ public class AuthService {
         return new LoginResponse(user.getId(), access, refresh);
     }
 
-    public UserInfoResponse getUserInfo(String email) {
-        UserEntity user = userService.findByEmail(email)
-            .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
-        return UserInfoResponse.from(user);
-    }
 
-    @Transactional
-    public void updateUserRole(Long id, UserRole userRole) {
-        UserEntity user = userService.findById(id)
-            .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
-        user.setRole(userRole);
-        userService.save(user);
-    }
 }
