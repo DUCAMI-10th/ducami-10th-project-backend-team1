@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.global.security.jwt.util;
 
 import com.ducami.ducamiproject.global.data.ApiResponse;
-import tools.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ApiResponseWriter {
 
-    private final JsonMapper mapper;
+    private final ObjectMapper mapper;
 
     public void write(HttpStatus status, ApiResponse<Void> apiResponse, HttpServletResponse response) throws IOException {
         response.setStatus(status.value());
