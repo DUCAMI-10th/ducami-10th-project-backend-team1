@@ -22,7 +22,7 @@ public class UserActivityResolver extends DefaultActivityResolver {
         return TargetType.USER == target;
     }
 
-    // Long을 array로 받아서 저장해도 좋을듯
+    // Long을 array로 받아서 저장해도 좋을듯 이때 LogTargetPK의 이름을 붙여줘서 Map형태로 저장해도 좋을거 같음
     @Override
     public Map<String, Object> before(Long id) {
         Map<String, Object> result = new HashMap<>();

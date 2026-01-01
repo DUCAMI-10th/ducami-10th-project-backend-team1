@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminLogController {
     private final AdminLogService adminLogService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<ApiResponse<PageResponse<AdminLogResponse>>> getAllLogs(
             @RequestParam(defaultValue="0") int page,
             @RequestParam(defaultValue="12") int size

@@ -37,7 +37,10 @@ public class ActivityLogAspect {
         Optional<LogActivityResolver> opt = resolvers.stream()
                 .filter(r -> r.supports(logActivity.target()))
                 .findFirst();
-        if (opt.isEmpty()) { return joinPoint.proceed(); }
+        if (opt.isEmpty()) {
+            log.warn("No log activity resolver found for {}", logActivity.target());
+             return joinPoint.proceed();
+        }
         LogActivityResolver resolver = opt.get();
 
         Map<String, Object> params = extractParams(joinPoint);
