@@ -7,6 +7,7 @@ import com.ducami.ducamiproject.domain.admin.log.resolver.LogActivityResolver;
 import com.ducami.ducamiproject.domain.admin.log.service.AdminLogService;
 import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,10 +20,12 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ActivityLogAspect {
     private final List<LogActivityResolver> resolvers;
     private final AdminLogService adminLogService;
@@ -31,10 +34,11 @@ public class ActivityLogAspect {
     public Object log(ProceedingJoinPoint joinPoint, LogActivity logActivity) throws Throwable {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        LogActivityResolver resolver = resolvers.stream()
+        Optional<LogActivityResolver> opt = resolvers.stream()
                 .filter(r -> r.supports(logActivity.target()))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 리졸버를 찾지 못했습니다."));
+                .findFirst();
+        if (opt.isEmpty()) { return joinPoint.proceed(); }
+        LogActivityResolver resolver = opt.get();
 
         Map<String, Object> params = extractParams(joinPoint);
         Long targetId = getTargetId(joinPoint);
@@ -43,11 +47,12 @@ public class ActivityLogAspect {
             params.putAll(before);
         }
         Object result = joinPoint.proceed();
+        params.put("_res", result);
         String message = resolver.resolve(params, logActivity.template());
 
         AdminLogEntity log = AdminLogEntity.builder()
                 .actor(userDetails.getUser())
-                .actionType(logActivity.action().toString())
+                .actionType(logActivity.action())
                 .details(message)
                 .build();
         adminLogService.saveLog(log);

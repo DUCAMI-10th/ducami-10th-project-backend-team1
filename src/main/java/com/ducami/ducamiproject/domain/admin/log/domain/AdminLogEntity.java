@@ -1,5 +1,6 @@
 package com.ducami.ducamiproject.domain.admin.log.domain;
 
+import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
@@ -21,8 +22,9 @@ public class AdminLogEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String actionType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "action_type", nullable = false)
+    private AdminAction actionType;
 
     @Column
     private String details;
