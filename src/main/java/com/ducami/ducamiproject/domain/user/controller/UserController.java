@@ -1,9 +1,5 @@
 package com.ducami.ducamiproject.domain.user.controller;
 
-import com.ducami.ducamiproject.domain.admin.log.annotation.AdminLog;
-import com.ducami.ducamiproject.domain.admin.log.annotation.LogTargetId;
-import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
-import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.user.dto.request.UpdateUserRoleRequest;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.service.UserService;
@@ -29,9 +25,8 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/role")
-    @AdminLog(action = AdminAction.CHANGE_ROLE, target = TargetType.USER)
     public ResponseEntity<ApiResponse<String>> updateUserRole(
-            @PathVariable @LogTargetId Long id,
+            @PathVariable Long id,
             @RequestBody @Valid UpdateUserRoleRequest request
     ) {
         userService.updateUserRole(id, request.role());

@@ -10,7 +10,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AdminLog {
-    AdminAction action() default AdminAction.CREATE;
-    TargetType target() default TargetType.USER;
+public @interface LogActivity {
+    TargetType target();
+    AdminAction action();
+    String template() default "";
 }
