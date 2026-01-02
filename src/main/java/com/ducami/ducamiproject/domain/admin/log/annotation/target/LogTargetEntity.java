@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 로그 기록을 위해 DB에서 데이터를 조회할 때 사용할 PK(ID) 파라미터를 지정합니다.
+ * 로그 기록을 위해 DB에서 데이터를 조회할 때 사용할 Entity(ID) 파라미터를 지정합니다.
  * * <p>이 어노테이션이 붙은 파라미터 값은 AOP에서 추출되어
  * {@code LogActivityResolver.before(Long id)}의 인자로 전달됩니다.</p>
  * * <p>리졸버는 이 ID를 통해 <b>변경 전의 Entity</b>를 조회하고,
@@ -18,6 +18,6 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @LogTarget(Long.class)
-public @interface LogTargetPK {
-    String value() default "";
+public @interface LogTargetEntity {
+    String value() default "entity";
 }

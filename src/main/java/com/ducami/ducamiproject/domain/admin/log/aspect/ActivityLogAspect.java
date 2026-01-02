@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.domain.admin.log.aspect;
 
 import com.ducami.ducamiproject.domain.admin.log.annotation.LogActivity;
-import com.ducami.ducamiproject.domain.admin.log.annotation.target.LogTargetPK;
+import com.ducami.ducamiproject.domain.admin.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.domain.admin.log.domain.AdminLogEntity;
 import com.ducami.ducamiproject.domain.admin.log.resolver.LogActivityResolver;
 import com.ducami.ducamiproject.domain.admin.log.service.AdminLogService;
@@ -44,15 +44,12 @@ public class ActivityLogAspect {
         LogActivityResolver resolver = opt.get();
 
         Map<String, Object> params = extractParams(joinPoint);
-        Long targetId = getTargetId(joinPoint);
-        if (targetId != null) {
-            Map<String, Object> before = resolver.before(targetId);
-            params.putAll(before);
-        }
+        Map<String, Object> targetIds = getTargetIds(joinPoint);
+        params.putAll(resolver.before(targetIds));
         Object result = joinPoint.proceed();
         params.put("_res", result);
-        String message = resolver.resolve(params, logActivity.template());
 
+        String message = resolver.resolve(params, logActivity.template());
         AdminLogEntity log = AdminLogEntity.builder()
                 .actor(userDetails.getUser())
                 .actionType(logActivity.action())
@@ -62,22 +59,22 @@ public class ActivityLogAspect {
         return result;
     }
 
-    // targetId를 하나만 잡도록 ( 나중에 수정 )
-    private Long getTargetId(ProceedingJoinPoint joinPoint) {
+    private Map<String, Object> getTargetIds(ProceedingJoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Annotation[][] parameterAnnotations = signature.getMethod().getParameterAnnotations();
         Object[] args = joinPoint.getArgs();
+        Map<String, Object> targetIds = new HashMap<>();
 
         for (int i = 0; i < parameterAnnotations.length; i++) {
             for (Annotation annotation : parameterAnnotations[i]) {
-                if (annotation instanceof LogTargetPK) {
-                    if (args[i] instanceof Long) {
-                        return (Long) args[i];
-                    }
+                if (annotation instanceof LogTargetEntity logTargetEntity) {
+                    targetIds.put(logTargetEntity.value(), args[i]);
+                    break;
                 }
             }
         }
-        return null;
+        return targetIds;
+
     }
 
     private Map<String, Object> extractParams(ProceedingJoinPoint joinPoint) {
@@ -91,7 +88,7 @@ public class ActivityLogAspect {
         for (int i = 0; i < parameterAnnotations.length; i++) {
             isPk = false;
             for (Annotation annotation : parameterAnnotations[i]) {
-                if (annotation instanceof LogTargetPK) {
+                if (annotation instanceof LogTargetEntity) {
                     isPk = true;
                     break;
                 }

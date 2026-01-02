@@ -6,6 +6,7 @@ import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.exception.UserException;
 import com.ducami.ducamiproject.domain.user.exception.UserStatusCode;
 import com.ducami.ducamiproject.domain.user.repository.UserRepository;
+import com.ducami.ducamiproject.global.exception.exception.ApplicationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,15 +23,28 @@ public class UserActivityResolver extends DefaultActivityResolver {
         return TargetType.USER == target;
     }
 
-    // Long을 array로 받아서 저장해도 좋을듯 이때 LogTargetPK의 이름을 붙여줘서 Map형태로 저장해도 좋을거 같음
     @Override
-    public Map<String, Object> before(Long id) {
+    public Map<String, Object> before(Map<String, Object> targetIds) {
         Map<String, Object> result = new HashMap<>();
-        UserEntity user = userRepository.findById(id)
-            .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
 
-        result.put("name", user.getName());
-        result.put("beforeRole", user.getRole());
+        for (Map.Entry<String, Object> entry : targetIds.entrySet()) {
+            if (entry.getValue() instanceof Long id) {
+                UserEntity user = userRepository.findById(id)
+                    .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
+                result.put(entry.getKey(), toSnapshot(user));
+            }
+        }
         return result;
+    }
+
+    @Override
+    public Map<String, Object> toSnapshot(Object entity) {
+        if (!(entity instanceof UserEntity user)) {
+            throw new ApplicationException(UserStatusCode.NOT_FOUND);
+        }
+        Map<String, Object> snapshot = new HashMap<>();
+        snapshot.put("name", user.getName());
+        snapshot.put("beforeRole", user.getRole());
+        return snapshot;
     }
 }
