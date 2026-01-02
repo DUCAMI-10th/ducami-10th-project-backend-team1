@@ -1,8 +1,5 @@
 package com.ducami.ducamiproject.domain.admin.log.resolver;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.ParserContext;
@@ -10,7 +7,6 @@ import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class DefaultActivityResolver implements LogActivityResolver {
