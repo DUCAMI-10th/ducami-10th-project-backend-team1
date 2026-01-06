@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 public class AnnotationLogActivitySource implements LogActivitySource {
     @Override
     public LogActivity getLogActivity(Method method) {
-        LogActivity ann = AnnotatedElementUtils.findMergedAnnotation(method, LogActivity.class);
-        return ann;
+        return AnnotatedElementUtils.findMergedAnnotation(method, LogActivity.class);
     }
 }
