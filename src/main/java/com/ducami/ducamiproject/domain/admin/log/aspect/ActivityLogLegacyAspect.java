@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +27,16 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ActivityLogAspect {
+public class ActivityLogLegacyAspect {
     private final List<LogActivityResolver> resolvers;
     private final AdminLogService adminLogService;
 
-    @Around("@annotation(logActivity)")
+    @Around("execution(* com.ducami.ducamiproject.domain.*.service.*.*(..))")
     public Object log(ProceedingJoinPoint joinPoint, LogActivity logActivity) throws Throwable {
+        System.out.println("반갑토");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
         Optional<LogActivityResolver> opt = resolvers.stream()
                 .filter(r -> r.supports(logActivity.target()))
                 .findFirst();
@@ -56,12 +59,32 @@ public class ActivityLogAspect {
                 .details(message)
                 .build();
         adminLogService.saveLog(log);
+
         return result;
     }
 
-    private Map<String, Object> getTargetIds(ProceedingJoinPoint joinPoint) {
+    private Method resolveMethod(ProceedingJoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Annotation[][] parameterAnnotations = signature.getMethod().getParameterAnnotations();
+        Method implMethod = signature.getMethod();
+        Object target = joinPoint.getTarget();
+
+        for (Class<?> iface : target.getClass().getInterfaces()) {
+            try {
+                return iface.getMethod(
+                    implMethod.getName(),
+                    implMethod.getParameterTypes()
+                );
+            }
+            catch (NoSuchMethodException ignored) {}
+        }
+
+        return implMethod;
+    }
+
+    private Map<String, Object> getTargetIds(ProceedingJoinPoint joinPoint) {
+        Method method = resolveMethod(joinPoint);
+
+        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
         Object[] args = joinPoint.getArgs();
         Map<String, Object> targetIds = new HashMap<>();
 
@@ -80,8 +103,11 @@ public class ActivityLogAspect {
     private Map<String, Object> extractParams(ProceedingJoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String[] parameterNames = signature.getParameterNames();
-        Annotation[][] parameterAnnotations = signature.getMethod().getParameterAnnotations(); //[파라미터순서][어노테이션들]
         Object[] args = joinPoint.getArgs();
+
+        Method method = resolveMethod(joinPoint);
+        Annotation[][] parameterAnnotations = method.getParameterAnnotations(); //[파라미터순서][어노테이션들]
+
         boolean isPk;
         Map<String, Object> logMap = new HashMap<>();
 

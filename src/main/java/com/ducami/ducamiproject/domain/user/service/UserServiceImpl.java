@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUserRole(@LogTargetEntity("user") Long id, UserRole userRole) {
+    public void updateUserRole(Long id, UserRole userRole) {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
         user.setRole(userRole);
