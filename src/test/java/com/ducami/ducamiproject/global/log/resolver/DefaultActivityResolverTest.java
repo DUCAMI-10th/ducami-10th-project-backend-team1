@@ -2,9 +2,11 @@ package com.ducami.ducamiproject.global.log.resolver;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
+import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
+import com.ducami.ducamiproject.global.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
 import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
 import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
@@ -12,15 +14,18 @@ import org.aopalliance.intercept.Invocation;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.introspection.ClassUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.MethodParameter;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -70,8 +75,9 @@ class DefaultActivityResolverTest {
         public Object invoke(MethodInvocation invocation) throws Throwable {
             logActivity = source.getLogActivity(invocation.getMethod());
             this.invocation = invocation;
-            return null;
+            return invocation.proceed();
         }
+
     }
 
     public interface TestInterface {
@@ -80,7 +86,7 @@ class DefaultActivityResolverTest {
             action = AdminAction.APPROVE,
             template = "user.name: {user.name},  _res: {_res}, username: {username}"
         )
-        String helloWorld(String username);
+        String helloWorld(@LogTargetEntity String username);
     }
 
     public static class TestClass implements TestInterface {
@@ -114,7 +120,7 @@ class DefaultActivityResolverTest {
         proxyFactory.setTarget(testClass);
 
         proxy1 = (TestInterface) proxyFactory.getProxy();
-        proxy1.helloWorld("test resolver");
+        String res = proxy1.helloWorld("test resolver");
         // == Advisor -> Pointcut -> Advice -> invoke ==
 
         assertThat(advice.getInvocation())
@@ -128,6 +134,28 @@ class DefaultActivityResolverTest {
         assertThat(context.getAction()).isEqualTo(AdminAction.APPROVE);
         assertThat(context.getTemplate()).isEqualTo("user.name: {user.name},  _res: {_res}, username: {username}");
         assertThat(context.getProceed()).isEqualTo("hello world");
+
+        System.out.println("=======");
+        Class<?> clazz = resolver.getTargetClass(advice.invocation);
+        Method method = resolver.getMethod(advice.invocation, clazz);
+        System.out.println(clazz);
+        System.out.println(method);
+        System.out.println("=======");
+        System.out.println(proxy1.getClass());
+        System.out.println(advice.invocation.getThis());
+        System.out.println(advice.invocation.getClass().getName());
+        System.out.println(AopUtils.getTargetClass(advice.invocation.getThis()).getName());
+        System.out.println(AopUtils.getMostSpecificMethod(advice.invocation.getMethod(), AopUtils.getTargetClass(advice.invocation.getClass())));
+
+        System.out.println("=======");
+        System.out.println(ClassUtils.getAllInterfaces(clazz));
+        method = ClassUtils.getAllInterfaces(clazz).get(0).getMethod("helloWorld", String.class);
+        for (int i = 0; i < method.getParameterCount(); i++) {
+            MethodParameter mp = new MethodParameter(method, i);
+            System.out.println(Arrays.toString(mp.getParameterAnnotations()));
+        }
+
+
 
         //TODO: Actor, Params 테스트 코드 추가
     }

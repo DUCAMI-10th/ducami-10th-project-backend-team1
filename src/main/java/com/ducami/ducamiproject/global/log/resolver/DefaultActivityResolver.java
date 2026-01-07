@@ -1,23 +1,23 @@
 package com.ducami.ducamiproject.global.log.resolver;
 
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
+import com.ducami.ducamiproject.global.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
 import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
 import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.core.MethodParameter;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.ParserContext;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class DefaultActivityResolver implements LogActivityResolver {
     protected final ExpressionParser parser = new SpelExpressionParser();
@@ -47,6 +47,31 @@ public abstract class DefaultActivityResolver implements LogActivityResolver {
                 .proceed(result)
                 .actor(null)
                 .build();
+    }
+
+    // 기본은 인터페이스의 어노테이션을 찾습니다. 만약 인터페이스가 존재하지 않는다면 구현체에서 찾아냅니다.
+    protected Map<String, Object> getTargetId(Class<?> clazz, Method method, Object[] args) {
+        Class<?>[] interfaces = ClassUtils.getAllInterfaces(clazz);
+
+        for (Class<?> iface : interfaces) {
+            try {
+                Method iMethod = iface.getMethod(method.getName(), method.getParameterTypes());
+                return getTargetIdInMethod(iMethod, args);
+            } catch (NoSuchMethodException ignored) {}
+        }
+        return getTargetIdInMethod(method, args);
+    }
+
+    protected Map<String, Object> getTargetIdInMethod(Method method, Object[] args) {
+        Map<String ,Object> targetId = new HashMap<>();
+        for (int i = 0; i < method.getParameterCount(); i++) {
+            MethodParameter mp = new MethodParameter(method, i);
+            if (mp.getParameterAnnotation(LogTargetEntity.class) != null) {
+                targetId.put(mp.getParameterName(), args[i]);
+            }
+        }
+
+        return targetId;
     }
 
     protected Class<?> getTargetClass(MethodInvocation invocation) {
