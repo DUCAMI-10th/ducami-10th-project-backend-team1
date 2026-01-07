@@ -44,7 +44,6 @@ public abstract class DefaultActivityResolver implements LogActivityResolver {
                 .template(logActivity.template())
                 .params(params)
                 .proceed(result)
-                .actor(null)
                 .build();
     }
 
