@@ -55,12 +55,18 @@ class LogActivityAopConfigurationTest {
 
     public interface TestClass {
         @LogActivity(
-            target = TargetType.POST,
+            target = TargetType.USER,
             action = AdminAction.APPROVE
         )
         String method1();
 
         String method2(String email);
+
+        @LogActivity(
+                target = TargetType.USER,
+                action = AdminAction.APPROVE
+        )
+        String method3(String userName);
     }
 
     public static class TestClass1 implements TestClass {
@@ -70,11 +76,20 @@ class LogActivityAopConfigurationTest {
         }
         @Override
         @LogActivity(
-                target = TargetType.POST,
+                target = TargetType.USER,
                 action = AdminAction.APPROVE
         )
         public String method2(String email) {
             return "method-1";
+        }
+
+        @Override
+        @LogActivity(
+                target = TargetType.USER,
+                action = AdminAction.CREATE
+        )
+        public String method3(String userName) {
+            return "method--1";
         }
     }
 
@@ -85,6 +100,10 @@ class LogActivityAopConfigurationTest {
         }
         @Override
         public String method2(String email) {
+            return "method-2";
+        }
+        @Override
+        public String method3(String userName) {
             return "method-2";
         }
     }
@@ -112,6 +131,7 @@ class LogActivityAopConfigurationTest {
         proxy1 = (TestClass) proxyFactory.getProxy();
         System.out.println(proxy1.method1());
         System.out.println(proxy1.method2("b"));
+        System.out.println(proxy1.method3("엄준식"));
 
         // PROXY 2
         proxyFactory = new ProxyFactory();
@@ -121,6 +141,7 @@ class LogActivityAopConfigurationTest {
         proxy2 = (TestClass) proxyFactory.getProxy();
         System.out.println(proxy2.method1());
         System.out.println(proxy2.method2("b"));
+        System.out.println(proxy2.method3("엄준식"));
 
     }
 }

@@ -1,6 +1,9 @@
 package com.ducami.ducamiproject.global.log.resolver;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
+import com.ducami.ducamiproject.global.log.annotation.LogActivity;
+import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
+import org.aopalliance.intercept.MethodInvocation;
 
 import java.util.Map;
 
@@ -12,4 +15,6 @@ public interface LogActivityResolver {
     String resolve(Map<String, Object> params, String message);
 
     Map<String, Object> toSnapshot(Object entity);
+
+    LogActivityContext resolve(MethodInvocation invocation, LogActivity logActivity) throws Throwable;
 }
