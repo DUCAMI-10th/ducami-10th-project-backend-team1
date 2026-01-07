@@ -6,12 +6,14 @@ import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Map;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@ToString
 public class LogActivityContext {
     private TargetType target;
     private AdminAction action;
