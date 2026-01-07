@@ -58,7 +58,6 @@ class DefaultActivityResolverTest {
         }
     };
 
-
     private static class Advice implements MethodInterceptor {
         private MethodInvocation invocation;
         private LogActivity logActivity;
@@ -80,19 +79,29 @@ class DefaultActivityResolverTest {
 
     }
 
-    public interface TestInterface {
+    public static interface TestInterface {
         @LogActivity(
             target = TargetType.USER,
             action = AdminAction.APPROVE,
             template = "user.name: {user.name},  _res: {_res}, username: {username}"
         )
-        String helloWorld(@LogTargetEntity String username);
+        String helloWorld(@LogTargetEntity("user") String username);
+        String userSpace(String username);
     }
 
     public static class TestClass implements TestInterface {
         @Override
         public String helloWorld(String username) {
             return "hello world";
+        }
+        @LogActivity(
+                target = TargetType.USER,
+                action = AdminAction.APPROVE,
+                template = "user.name: {user.name},  _res: {_res}, username: {username}"
+        )
+        @Override
+        public String userSpace(@LogTargetEntity("userEntity") String username) {
+            return "userSpace";
         }
     }
 
@@ -160,4 +169,26 @@ class DefaultActivityResolverTest {
         //TODO: Actor, Params 테스트 코드 추가
     }
 
+
+    @Test
+    @DisplayName("getTargetId 테스트")
+    void testGetTargetId() throws NoSuchMethodException {
+        Class<?> clazz = TestClass.class;
+        Method method1 = clazz.getDeclaredMethod("helloWorld", String.class);
+        Method method2 = clazz.getDeclaredMethod("userSpace", String.class);
+        Object[] args = {"엄준식"};
+
+        Map<String, Object> targetIds1 = resolver.getTargetId(clazz, method1, args);
+        Map<String, Object> targetIds2 = resolver.getTargetId(clazz, method2, args);
+
+        assertThat(targetIds1)
+                .containsKey("user")
+                .containsValue("엄준식")
+                .hasSize(1);
+        assertThat(targetIds2)
+                .containsKey("userEntity")
+                .containsValue("엄준식")
+                .hasSize(1);
+
+    }
 }
