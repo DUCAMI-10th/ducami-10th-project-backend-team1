@@ -1,6 +1,6 @@
-package com.ducami.ducamiproject.domain.admin.log.annotation.target;
+package com.ducami.ducamiproject.global.log.annotation.target;
 
-import com.ducami.ducamiproject.domain.admin.log.annotation.LogTarget;
+import com.ducami.ducamiproject.global.log.annotation.LogTarget;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

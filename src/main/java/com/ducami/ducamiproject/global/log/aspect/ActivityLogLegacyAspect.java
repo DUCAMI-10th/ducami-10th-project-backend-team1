@@ -1,9 +1,9 @@
-package com.ducami.ducamiproject.domain.admin.log.aspect;
+package com.ducami.ducamiproject.global.log.aspect;
 
-import com.ducami.ducamiproject.domain.admin.log.annotation.LogActivity;
-import com.ducami.ducamiproject.domain.admin.log.annotation.target.LogTargetEntity;
+import com.ducami.ducamiproject.global.log.annotation.LogActivity;
+import com.ducami.ducamiproject.global.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.domain.admin.log.domain.AdminLogEntity;
-import com.ducami.ducamiproject.domain.admin.log.resolver.LogActivityResolver;
+import com.ducami.ducamiproject.global.log.resolver.LogActivityResolver;
 import com.ducami.ducamiproject.domain.admin.log.service.AdminLogService;
 import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import lombok.RequiredArgsConstructor;

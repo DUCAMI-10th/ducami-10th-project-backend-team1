@@ -1,8 +1,8 @@
-package com.ducami.ducamiproject.domain.admin.log.aop;
+package com.ducami.ducamiproject.global.log.aop;
 
 
-import com.ducami.ducamiproject.domain.admin.log.aop.source.AnnotationLogActivitySource;
-import com.ducami.ducamiproject.domain.admin.log.aop.source.LogActivitySource;
+import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
+import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.aop.support.StaticMethodMatcherPointcut;
 

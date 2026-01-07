@@ -1,6 +1,6 @@
 package com.ducami.ducamiproject.domain.auth.controller;
 
-import com.ducami.ducamiproject.domain.admin.log.annotation.target.LogTargetId;
+import com.ducami.ducamiproject.global.log.annotation.target.LogTargetId;
 import com.ducami.ducamiproject.domain.auth.dto.request.LoginRequest;
 import com.ducami.ducamiproject.domain.auth.dto.request.SignupRequest;
 import com.ducami.ducamiproject.domain.auth.dto.response.LoginResponse;

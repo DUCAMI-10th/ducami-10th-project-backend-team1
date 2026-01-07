@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.admin.log.resolver;
+package com.ducami.ducamiproject.global.log.resolver;
 
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.ExpressionParser;

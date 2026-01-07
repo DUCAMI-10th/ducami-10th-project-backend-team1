@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.admin.log.aop;
+package com.ducami.ducamiproject.global.log.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

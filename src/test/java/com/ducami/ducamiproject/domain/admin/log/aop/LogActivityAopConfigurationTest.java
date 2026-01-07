@@ -1,26 +1,23 @@
 package com.ducami.ducamiproject.domain.admin.log.aop;
 
-import com.ducami.ducamiproject.domain.admin.log.annotation.LogActivity;
+import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.service.UserService;
-import org.aopalliance.aop.Advice;
+import com.ducami.ducamiproject.global.log.aop.LogActivityAdvice;
+import com.ducami.ducamiproject.global.log.aop.LogActivityAopConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.Advisor;
-import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = LogActivityAopConfiguration.class)
 class LogActivityAopConfigurationTest {
@@ -62,6 +59,7 @@ class LogActivityAopConfigurationTest {
             action = AdminAction.APPROVE
         )
         String method1();
+
         String method2(String email);
     }
 

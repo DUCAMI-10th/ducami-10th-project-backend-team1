@@ -1,9 +1,5 @@
 package com.ducami.ducamiproject.domain.user.service;
 
-import com.ducami.ducamiproject.domain.admin.log.annotation.LogActivity;
-import com.ducami.ducamiproject.domain.admin.log.annotation.target.LogTargetEntity;
-import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
-import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;

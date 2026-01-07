@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.admin.log.annotation;
+package com.ducami.ducamiproject.global.log.annotation;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;

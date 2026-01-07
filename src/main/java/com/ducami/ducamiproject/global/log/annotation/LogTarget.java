@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.admin.log.annotation;
+package com.ducami.ducamiproject.global.log.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
