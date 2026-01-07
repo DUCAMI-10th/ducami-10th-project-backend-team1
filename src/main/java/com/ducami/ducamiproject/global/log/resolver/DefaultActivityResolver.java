@@ -7,22 +7,17 @@ import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySourc
 import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.MethodParameter;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.ParserContext;
-import org.springframework.expression.common.TemplateParserContext;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.*;
 
 public abstract class DefaultActivityResolver implements LogActivityResolver {
-    protected final ExpressionParser parser = new SpelExpressionParser();
-    protected final ParserContext parserContext = new TemplateParserContext("{", "}");
-    protected final LogActivitySource source = new AnnotationLogActivitySource();
+    private static final ParameterNameDiscoverer nameDiscoverer =
+            new DefaultParameterNameDiscoverer();
 
     @Override
     @Deprecated
@@ -113,10 +108,15 @@ public abstract class DefaultActivityResolver implements LogActivityResolver {
     }
 
     protected Map<String, Object> extractParams(Method method, Object[] args) {
-        Parameter[] parameters = method.getParameters();
+        String[] paramNames = nameDiscoverer.getParameterNames(method);
         Map<String, Object> params = new HashMap<>();
-        for (int i = 0; i < parameters.length; i++) {
-            params.put(parameters[i].getName(), args[i]);
+
+        if (paramNames == null) {
+            return params;
+        }
+
+        for (int i = 0; i < paramNames.length; i++) {
+            params.put(paramNames[i], args[i]);
         }
 
         return params;
