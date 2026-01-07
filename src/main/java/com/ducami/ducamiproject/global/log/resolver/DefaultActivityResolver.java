@@ -2,6 +2,8 @@ package com.ducami.ducamiproject.global.log.resolver;
 
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
+import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
+import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.expression.ExpressionParser;
@@ -15,10 +17,12 @@ import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class DefaultActivityResolver implements LogActivityResolver {
     protected final ExpressionParser parser = new SpelExpressionParser();
     protected final ParserContext parserContext = new TemplateParserContext("{", "}");
+    protected final LogActivitySource source = new AnnotationLogActivitySource();
 
     @Override
     @Deprecated
@@ -30,8 +34,8 @@ public abstract class DefaultActivityResolver implements LogActivityResolver {
     public LogActivityContext resolve(MethodInvocation invocation, LogActivity logActivity) throws Throwable {
         Class<?> targetClass = getTargetClass(invocation);
         Method method = getMethod(invocation, targetClass);
-        Map<String, Object> params = extractParams(method, invocation.getArguments());
 
+        Map<String, Object> params = extractParams(method, invocation.getArguments());
         Object result = invocation.proceed();
         params.put("_res", result);
 
@@ -46,7 +50,7 @@ public abstract class DefaultActivityResolver implements LogActivityResolver {
     }
 
     protected Class<?> getTargetClass(MethodInvocation invocation) {
-        return AopUtils.getTargetClass(invocation);
+        return AopUtils.getTargetClass(Objects.requireNonNull(invocation.getThis()));
     }
 
     protected Method getMethod(MethodInvocation invocation, Class<?> targetClass) {
