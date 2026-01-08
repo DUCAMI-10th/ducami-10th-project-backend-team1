@@ -1,7 +1,9 @@
 package com.ducami.ducamiproject.global.log.aop;
 
 
+import com.ducami.ducamiproject.global.log.enricher.ContextEnricher;
 import com.ducami.ducamiproject.global.log.resolver.LogActivityResolver;
+import com.ducami.ducamiproject.global.log.sink.LogActivitySink;
 import lombok.RequiredArgsConstructor;
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.Advisor;
@@ -17,13 +19,15 @@ import java.util.List;
 public class LogActivityAopConfiguration {
 
     private final List<LogActivityResolver> resolvers;
+    private final List<ContextEnricher> enrichers;
+    private final LogActivitySink sink;
+    private final LogActivityAdvice logActivityAdvice;
 
     @Bean
     public DefaultPointcutAdvisor logActivityAdvisor() { // 임시수정
         Pointcut pointcut = new LogPointcut();
-        Advice advice = new LogActivityAdvice(resolvers);
 
-        return new DefaultPointcutAdvisor(pointcut, advice);
+        return new DefaultPointcutAdvisor(pointcut, logActivityAdvice);
     }
 
 }

@@ -11,4 +11,6 @@ public interface AdminLogService {
 
     void saveLog(AdminLogEntity logEntity);
 
+    void saveLog(LogActivityContext context);
+
 }

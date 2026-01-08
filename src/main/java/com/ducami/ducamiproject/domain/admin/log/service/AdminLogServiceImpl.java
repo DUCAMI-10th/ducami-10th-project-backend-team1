@@ -3,6 +3,7 @@ package com.ducami.ducamiproject.domain.admin.log.service;
 import com.ducami.ducamiproject.domain.admin.log.domain.AdminLogEntity;
 import com.ducami.ducamiproject.domain.admin.log.dto.response.AdminLogResponse;
 import com.ducami.ducamiproject.domain.admin.log.repository.AdminLogRepository;
+import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,5 +27,10 @@ public class AdminLogServiceImpl implements AdminLogService {
     @Transactional
     public void saveLog(AdminLogEntity logEntity) {
         adminLogRepository.save(logEntity);
+    }
+
+    @Override
+    public void saveLog(LogActivityContext context) {
+
     }
 }
