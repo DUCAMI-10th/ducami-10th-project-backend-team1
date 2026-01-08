@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Base {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  protected Long id;
 
   @CreationTimestamp
   @JsonIgnore
