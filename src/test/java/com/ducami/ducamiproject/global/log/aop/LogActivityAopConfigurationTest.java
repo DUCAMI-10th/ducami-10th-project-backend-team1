@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.admin.log.aop;
+package com.ducami.ducamiproject.global.log.aop;
 
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;

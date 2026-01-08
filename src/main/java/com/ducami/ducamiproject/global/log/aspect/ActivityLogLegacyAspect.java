@@ -27,6 +27,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@Deprecated
 public class ActivityLogLegacyAspect {
     private final List<LogActivityResolver> resolvers;
     private final AdminLogService adminLogService;

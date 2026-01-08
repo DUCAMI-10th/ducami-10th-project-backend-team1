@@ -79,7 +79,7 @@ class DefaultActivityResolverTest {
 
     }
 
-    public static interface TestInterface {
+    public interface TestInterface {
         @LogActivity(
             target = TargetType.USER,
             action = AdminAction.APPROVE,
@@ -163,10 +163,6 @@ class DefaultActivityResolverTest {
             MethodParameter mp = new MethodParameter(method, i);
             System.out.println(Arrays.toString(mp.getParameterAnnotations()));
         }
-
-
-
-        //TODO: Actor, Params 테스트 코드 추가
     }
 
 
