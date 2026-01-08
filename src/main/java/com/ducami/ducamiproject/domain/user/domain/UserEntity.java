@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor()
+@AllArgsConstructor
 @Builder
 public class UserEntity extends Base {
 
@@ -35,5 +35,9 @@ public class UserEntity extends Base {
 
     @Column
     private String major;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 }
