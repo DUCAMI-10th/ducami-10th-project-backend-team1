@@ -1,7 +1,6 @@
-package com.ducami.ducamiproject.global.log.resolver;
+package com.ducami.ducamiproject.global.security.resolver;
 
-import com.ducami.ducamiproject.domain.admin.log.dto.UserActor;
-import com.ducami.ducamiproject.global.log.entity.Actor;
+import com.ducami.ducamiproject.global.entity.UserActor;
 import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,8 @@ public class CustomActorProvider extends SpringSecurityActorProvider<CustomUserD
         if (details != null) {
             return UserActor.of(details.getUser());
         }
-        return null;
+
+        return UserActor.anonymous();
     }
 
 }

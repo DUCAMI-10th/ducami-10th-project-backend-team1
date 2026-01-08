@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.global.log.resolver;
+package com.ducami.ducamiproject.global.security.resolver;
 
 import com.ducami.ducamiproject.global.log.entity.Actor;
 

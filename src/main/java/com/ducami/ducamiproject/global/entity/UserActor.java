@@ -1,4 +1,4 @@
-package com.ducami.ducamiproject.domain.admin.log.dto;
+package com.ducami.ducamiproject.global.entity;
 
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.global.log.entity.Actor;
@@ -11,5 +11,9 @@ public class UserActor extends Actor {
 
     public static UserActor of(UserEntity entity) {
         return new UserActor(entity.getId(), entity.getName());
+    }
+
+    public static UserActor anonymous() {
+        return new UserActor(null, "anonymousUser");
     }
 }

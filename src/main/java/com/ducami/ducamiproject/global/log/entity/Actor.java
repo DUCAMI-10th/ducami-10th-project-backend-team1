@@ -8,4 +8,8 @@ import lombok.Getter;
 public class Actor {
     private Long userId;
     private String username;
+
+    public static Actor anonymous() {
+        return new Actor(null, "anonymousUser");
+    }
 }
