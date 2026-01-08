@@ -1,8 +1,7 @@
 package com.ducami.ducamiproject.global.log.resolver;
 
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.ducami.ducamiproject.global.log.entity.Actor;
 
-public interface ActorProvider<A> {
+public interface ActorProvider<A extends Actor> {
     A getActor();
 }

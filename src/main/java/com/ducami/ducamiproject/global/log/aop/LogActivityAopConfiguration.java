@@ -19,9 +19,9 @@ public class LogActivityAopConfiguration {
     private final List<LogActivityResolver> resolvers;
 
     @Bean
-    public Advisor logActivityAdvisor() {
+    public DefaultPointcutAdvisor logActivityAdvisor() { // 임시수정
         Pointcut pointcut = new LogPointcut();
-        Advice advice = new LogActivityAdvice();
+        Advice advice = new LogActivityAdvice(resolvers);
 
         return new DefaultPointcutAdvisor(pointcut, advice);
     }

@@ -2,6 +2,7 @@ package com.ducami.ducamiproject.global.log.aop;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.admin.log.service.AdminLogService;
+import com.ducami.ducamiproject.domain.user.resolver.UserActivityResolver;
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
 import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
@@ -29,24 +30,7 @@ import java.util.Optional;
 public class LogActivityAdvice implements MethodInterceptor {
 
     private final LogActivitySource source = new AnnotationLogActivitySource();
-    private final List<LogActivityResolver> resolvers = List.of(
-            new DefaultActivityResolver() {
-                @Override
-                public boolean supports(TargetType target) {
-                    return target == TargetType.USER;
-                }
-
-                @Override
-                public Map<String, Object> before(Map<String, Object> targetIds) {
-                    return Map.of();
-                }
-
-                @Override
-                public Map<String, Object> toSnapshot(Object entity) {
-                    return Map.of();
-                }
-            }
-    );
+    private final List<LogActivityResolver> resolvers;
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -61,6 +45,7 @@ public class LogActivityAdvice implements MethodInterceptor {
         }
 
         LogActivityContext context = resolverOpt.get().resolve(invocation, logActivity);
+        log.info(context.toString());
         return context.getProceed();
     }
 }
