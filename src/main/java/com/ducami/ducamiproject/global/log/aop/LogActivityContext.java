@@ -2,7 +2,6 @@ package com.ducami.ducamiproject.global.log.aop;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.global.log.entity.Actor;
 import lombok.*;
 

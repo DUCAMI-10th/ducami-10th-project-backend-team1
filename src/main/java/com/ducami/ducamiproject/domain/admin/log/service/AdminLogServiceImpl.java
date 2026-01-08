@@ -25,12 +25,12 @@ public class AdminLogServiceImpl implements AdminLogService {
 
     @Override
     @Transactional
-    public void saveLog(AdminLogEntity logEntity) {
-        adminLogRepository.save(logEntity);
-    }
-
-    @Override
     public void saveLog(LogActivityContext context) {
-
+        AdminLogEntity log = AdminLogEntity.builder()
+                .actionType(context.getAction())
+                .details(context.getMessage())
+                .actorId(context.getActor().getUserId())
+                .build();
+        adminLogRepository.save(log);
     }
 }

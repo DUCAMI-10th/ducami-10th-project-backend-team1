@@ -3,8 +3,6 @@ package com.ducami.ducamiproject.global.log.resolver;
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.global.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
-import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
-import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.core.DefaultParameterNameDiscoverer;
@@ -16,14 +14,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public abstract class DefaultActivityResolver implements LogActivityResolver {
-    private static final ParameterNameDiscoverer nameDiscoverer =
+    protected static final ParameterNameDiscoverer nameDiscoverer =
             new DefaultParameterNameDiscoverer();
-
-    @Override
-    @Deprecated
-    public String resolve(Map<String, Object> params, String message) {
-        return null;
-    }
 
     @Override
     public LogActivityContext resolve(MethodInvocation invocation, LogActivity logActivity) throws Throwable {

@@ -8,8 +8,10 @@ import org.springframework.expression.ParserContext;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class SpELMessageResolver implements LogMessageResolver {
     protected final ExpressionParser parser = new SpelExpressionParser();
     protected final ParserContext parserContext = new TemplateParserContext("{", "}");

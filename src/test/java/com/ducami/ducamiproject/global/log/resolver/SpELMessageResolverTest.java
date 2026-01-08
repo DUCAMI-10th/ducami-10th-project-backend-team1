@@ -4,18 +4,23 @@ import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SpELMessageResolverTest {
+@SpringBootTest
+public class SpELMessageResolverTest {
+
+    @Autowired
+    private LogMessageResolver resolver;
 
     @Test
     @DisplayName("메세지 렌더 테스트1")
     void Test_userServiceContext1() {
-        LogMessageResolver resolver = new SpELMessageResolver();
         Map<String, Object> params = new HashMap<>();
         params.put("name", "엄준식");
         params.put("jett", "제트");

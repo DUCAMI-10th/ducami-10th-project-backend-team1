@@ -33,7 +33,11 @@ public class AdminLogEntity {
     @CreationTimestamp
     private LocalDateTime actionTime;
 
-    @ManyToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "actor_id", insertable = false, updatable = false)
     private UserEntity actor;
+
+    @Column(name = "actor_id", nullable = false)
+    private Long actorId;
+
 }

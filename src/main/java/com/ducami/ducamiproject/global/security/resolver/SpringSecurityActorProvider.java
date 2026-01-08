@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 //TODO: 폴더위치 옮기기
 //TODO: 코드 Bean 등록
-//TODO: Sink, enricher(arctor) 테스트
 public abstract class SpringSecurityActorProvider<U extends UserDetails, A extends Actor> implements ActorProvider<A> {
 
     private final Class<U> detailsType;

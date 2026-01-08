@@ -1,9 +1,12 @@
 package com.ducami.ducamiproject.domain.user.domain;
 
+import com.ducami.ducamiproject.domain.admin.log.domain.AdminLogEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -35,6 +38,10 @@ public class UserEntity extends Base {
 
     @Column
     private String major;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
+    private List<AdminLogEntity> logs;
+
 
     public void setId(Long id) {
         this.id = id;

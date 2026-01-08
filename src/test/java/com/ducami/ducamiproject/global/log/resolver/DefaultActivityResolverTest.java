@@ -2,35 +2,26 @@ package com.ducami.ducamiproject.global.log.resolver;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
-import com.ducami.ducamiproject.domain.user.enums.UserRole;
-import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.global.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
 import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
 import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
-import org.aopalliance.intercept.Invocation;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.util.introspection.ClassUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AopUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.MethodParameter;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class DefaultActivityResolverTest {
@@ -45,11 +36,6 @@ class DefaultActivityResolverTest {
         @Override
         public Map<String, Object> before(Map<String, Object> targetIds) {
             return Map.of();
-        }
-
-        @Override
-        public String resolve(Map<String, Object> params, String message) {
-            return "";
         }
 
         @Override

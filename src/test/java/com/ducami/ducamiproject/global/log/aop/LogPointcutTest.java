@@ -9,16 +9,21 @@ import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.domain.user.service.UserServiceImpl;
-import com.ducami.ducamiproject.global.log.aop.LogPointcut;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 
+@SpringBootTest
 class LogPointcutTest {
+
+    @Autowired
+    private LogPointcut logPointcut;
 
     private final UserService userService = new UserService() {
 
@@ -66,7 +71,6 @@ class LogPointcutTest {
     @DisplayName("특정 메서드의 구현체의 인터페이스가 LogActivity를 가지고 있는지 확인한다.")
     @Test
     void testLogPointcutIsTrue() throws Exception {
-        LogPointcut logPointcut = new LogPointcut();
         String testMethodName = "updateUserRole";
         Method method = Arrays.stream(UserServiceImpl.class.getDeclaredMethods())
                 .filter(m -> m.getName().equals(testMethodName))
@@ -81,7 +85,6 @@ class LogPointcutTest {
     @DisplayName("특정 메서드의 구현체의 인터페이스가 LogActivity를 가지고 있지 않은지 확인한다.")
     @Test
     void testLogPointcutIsFalse() throws Exception {
-        LogPointcut logPointcut = new LogPointcut();
         String testMethodName = "checkEmail";
         Method method = Arrays.stream(UserServiceImpl.class.getDeclaredMethods())
                 .filter(m -> m.getName().equals(testMethodName))
@@ -96,7 +99,6 @@ class LogPointcutTest {
     @DisplayName("인터페이스에는 없지만, 구현체에는 Activity가 있는 경우")
     @Test
     void testLogPointcutIsTrueWhereImpl() {
-        LogPointcut logPointcut = new LogPointcut();
         String testMethodName = "checkEmail";
         Method method = Arrays.stream(userService.getClass().getDeclaredMethods())
                 .filter(m -> m.getName().equals(testMethodName))
@@ -111,7 +113,6 @@ class LogPointcutTest {
     @DisplayName("인터페이스에는 없지만, 구현체에는 Activity가 없는 경우")
     @Test
     void testLogPointcutIsFalseWhereImpl() {
-        LogPointcut logPointcut = new LogPointcut();
         String testMethodName = "findByEmail";
         Method method = Arrays.stream(userService.getClass().getDeclaredMethods())
                 .filter(m -> m.getName().equals(testMethodName))
@@ -126,7 +127,6 @@ class LogPointcutTest {
     @DisplayName("구현체에만 존재하는 메서드에 Activity가 있는 경우")
     @Test
     void testLogPointcutIsTrueWhereOnlyImpl() {
-        LogPointcut logPointcut = new LogPointcut();
         String testMethodName = "test2";
         Method method = Arrays.stream(userService.getClass().getDeclaredMethods())
                 .filter(m -> m.getName().equals(testMethodName))
@@ -141,7 +141,6 @@ class LogPointcutTest {
     @DisplayName("구현체에만 존재하는 메서드에 Activity가 없는 경우")
     @Test
     void testLogPointcutIsFalseWhereOnlyImpl() {
-        LogPointcut logPointcut = new LogPointcut();
         String testMethodName = "test1";
         Method method = Arrays.stream(userService.getClass().getDeclaredMethods())
                 .filter(m -> m.getName().equals(testMethodName))

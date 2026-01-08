@@ -1,7 +1,6 @@
 package com.ducami.ducamiproject.global.log.aop;
 
 import com.ducami.ducamiproject.global.log.annotation.LogActivity;
-import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
 import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
 import com.ducami.ducamiproject.global.log.enricher.ContextEnricher;
 import com.ducami.ducamiproject.global.log.resolver.LogActivityResolver;
@@ -15,13 +14,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-// 프록시 패턴으로 기존 코드 감싸서 메서드 실행 전에 찾고 invoke하는거 직접 해보면 좋을듯
+
 @RequiredArgsConstructor
 @Slf4j
 @Component
 public class LogActivityAdvice implements MethodInterceptor {
 
-    protected final LogActivitySource source = new AnnotationLogActivitySource();
+    protected final LogActivitySource source;
     protected final List<LogActivityResolver> resolvers;
     protected final LogActivitySink sink;
     protected final List<ContextEnricher> enrichers;

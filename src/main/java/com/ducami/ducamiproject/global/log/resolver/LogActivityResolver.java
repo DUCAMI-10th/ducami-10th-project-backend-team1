@@ -12,8 +12,6 @@ public interface LogActivityResolver {
 
     Map<String, Object> before(Map<String, Object> targetIds);
 
-    String resolve(Map<String, Object> params, String message);
-
     Map<String, Object> toSnapshot(Object entity);
 
     LogActivityContext resolve(MethodInvocation invocation, LogActivity logActivity) throws Throwable;

@@ -7,8 +7,6 @@ import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.service.UserService;
-import com.ducami.ducamiproject.global.log.aop.LogActivityAdvice;
-import com.ducami.ducamiproject.global.log.aop.LogActivityAopConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-@SpringBootTest(classes = LogActivityAopConfiguration.class)
-class LogActivityAopConfigurationTest {
+@SpringBootTest
+class LogActivityAutoConfigurationTest {
 
     @Autowired
     private Advisor logActivityAdvisor;
