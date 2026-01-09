@@ -1,19 +1,50 @@
 package com.ducami.ducamiproject.global.log.aop;
 
 
+import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
+import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
+import com.ducami.ducamiproject.domain.user.enums.UserRole;
+import com.ducami.ducamiproject.domain.user.service.UserService;
+import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import com.ducami.ducamiproject.global.log.enricher.ContextEnricher;
 import com.ducami.ducamiproject.global.log.enricher.LogMessageEnricher;
+import com.ducami.ducamiproject.global.log.sink.LogActivitySink;
+import org.aopalliance.aop.Advice;
+import org.aopalliance.intercept.MethodInvocation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class LogActivityAdviceTest {
+
+    @Autowired
+    private LogActivityAdvice logActivityAdvice;
+
+    public static class TestClass {
+        @LogActivity(
+            target = TargetType.USER,
+            action = AdminAction.APPROVE,
+            template = "new"
+        )
+        public void call() {}
+    }
+
+    @Test
+    void testObjectProvider() {
+        TestClass test = new TestClass();
+        TestClass proxy1;
+        ProxyFactory proxyFactory = new ProxyFactory();
+        proxyFactory.setTarget(test);
+        proxyFactory.addAdvice(logActivityAdvice);
+        proxy1 = (TestClass) proxyFactory.getProxy();
+        proxy1.call();
+
+
+    }
 
 //    @Test
 //    @DisplayName("advice의 enrichers가 제대로 작동되는지 | MessageEnricher만")

@@ -4,9 +4,12 @@ package com.ducami.ducamiproject.global.log.enricher;
 import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
 import com.ducami.ducamiproject.global.log.resolver.LogMessageResolver;
 import com.ducami.ducamiproject.global.log.resolver.SpELMessageResolver;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Component;
 
 @Component
+@Role(BeanDefinition.ROLE_INFRASTRUCTURE) // Added @Role
 public class LogMessageEnricher extends DefaultContextEnricher {
     private final LogMessageResolver resolver = new SpELMessageResolver();
 

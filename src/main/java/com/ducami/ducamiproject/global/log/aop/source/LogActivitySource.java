@@ -5,5 +5,8 @@ import com.ducami.ducamiproject.global.log.annotation.LogActivity;
 import java.lang.reflect.Method;
 
 public interface LogActivitySource {
-    LogActivity getLogActivity(Method method);
+    static LogActivity getLogActivity(Method method) {
+        return null;
+    }
+
 }

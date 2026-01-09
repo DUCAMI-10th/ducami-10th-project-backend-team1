@@ -47,7 +47,6 @@ class DefaultActivityResolverTest {
     private static class Advice implements MethodInterceptor {
         private MethodInvocation invocation;
         private LogActivity logActivity;
-        private final LogActivitySource source = new AnnotationLogActivitySource();
 
         public MethodInvocation getInvocation() {
             return invocation;
@@ -58,7 +57,7 @@ class DefaultActivityResolverTest {
 
         @Override
         public Object invoke(MethodInvocation invocation) throws Throwable {
-            logActivity = source.getLogActivity(invocation.getMethod());
+            logActivity = LogActivitySource.getLogActivity(invocation.getMethod());
             this.invocation = invocation;
             return invocation.proceed();
         }

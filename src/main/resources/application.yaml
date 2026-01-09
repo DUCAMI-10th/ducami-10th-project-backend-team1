@@ -1,4 +1,6 @@
 spring:
+  main:
+    lazy-initialization: true
   config:
     import: optional:file:.env[.properties]
 
@@ -21,6 +23,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true

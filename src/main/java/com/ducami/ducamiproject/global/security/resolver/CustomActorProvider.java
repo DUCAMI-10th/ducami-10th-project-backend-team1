@@ -2,6 +2,8 @@ package com.ducami.ducamiproject.global.security.resolver;
 
 import com.ducami.ducamiproject.global.entity.UserActor;
 import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Component;
 
 @Component

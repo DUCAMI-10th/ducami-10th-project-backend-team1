@@ -8,6 +8,9 @@ import com.ducami.ducamiproject.domain.user.exception.UserStatusCode;
 import com.ducami.ducamiproject.domain.user.repository.UserRepository;
 import com.ducami.ducamiproject.global.exception.exception.ApplicationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,7 +19,7 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class UserActivityResolver extends DefaultActivityResolver {
-    private final UserRepository userRepository;
+    private final ObjectProvider<UserRepository> repositoryProvider;
 
     @Override
     public boolean supports(TargetType target) {
@@ -25,6 +28,8 @@ public class UserActivityResolver extends DefaultActivityResolver {
 
     @Override
     public Map<String, Object> before(Map<String, Object> targetIds) {
+        UserRepository userRepository = repositoryProvider.getObject();
+
         Map<String, Object> result = new HashMap<>();
 
         for (Map.Entry<String, Object> entry : targetIds.entrySet()) {
@@ -35,7 +40,7 @@ public class UserActivityResolver extends DefaultActivityResolver {
             }
         }
         return result;
-    }
+            }
 
     @Override
     public Map<String, Object> toSnapshot(Object entity) {
@@ -48,3 +53,4 @@ public class UserActivityResolver extends DefaultActivityResolver {
         return snapshot;
     }
 }
+
