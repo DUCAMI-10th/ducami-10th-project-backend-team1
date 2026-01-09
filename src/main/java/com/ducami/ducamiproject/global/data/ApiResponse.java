@@ -24,10 +24,6 @@ public record ApiResponse<T>(
     return of(data, HttpStatus.CREATED);
   }
 
-//  public static <T> ApiResponse<T> ok(T data) {
-//    return new ApiResponse<>(HttpStatus.OK.value(), data, null);
-//  }
-
   public static ApiResponse<Void> error(HttpStatus status, String code, String message) {
     return new ApiResponse<>(status.value(), null, ErrorResponse.of(code, message));
   }
