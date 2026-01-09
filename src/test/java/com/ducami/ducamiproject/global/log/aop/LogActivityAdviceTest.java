@@ -3,15 +3,8 @@ package com.ducami.ducamiproject.global.log.aop;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
-import com.ducami.ducamiproject.domain.user.enums.UserRole;
-import com.ducami.ducamiproject.domain.user.service.UserService;
-import com.ducami.ducamiproject.global.log.annotation.LogActivity;
-import com.ducami.ducamiproject.global.log.enricher.ContextEnricher;
-import com.ducami.ducamiproject.global.log.enricher.LogMessageEnricher;
-import com.ducami.ducamiproject.global.log.sink.LogActivitySink;
-import org.aopalliance.aop.Advice;
-import org.aopalliance.intercept.MethodInvocation;
-import org.junit.jupiter.api.DisplayName;
+import com.ducami.ducamiproject.infra.log.annotation.LogActivity;
+import com.ducami.ducamiproject.infra.log.aop.LogActivityAdvice;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;

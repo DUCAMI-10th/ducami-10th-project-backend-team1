@@ -1,6 +1,7 @@
 package com.ducami.ducamiproject.global.log.resolver;
 
-import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
+import com.ducami.ducamiproject.infra.log.aop.LogActivityContext;
+import com.ducami.ducamiproject.infra.log.message.resolver.LogMessageResolver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class SpELMessageResolverTest {

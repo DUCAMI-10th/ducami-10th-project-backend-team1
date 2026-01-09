@@ -2,11 +2,11 @@ package com.ducami.ducamiproject.global.log.resolver;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
-import com.ducami.ducamiproject.global.log.annotation.LogActivity;
-import com.ducami.ducamiproject.global.log.annotation.target.LogTargetEntity;
-import com.ducami.ducamiproject.global.log.aop.LogActivityContext;
-import com.ducami.ducamiproject.global.log.aop.source.AnnotationLogActivitySource;
-import com.ducami.ducamiproject.global.log.aop.source.LogActivitySource;
+import com.ducami.ducamiproject.infra.log.annotation.LogActivity;
+import com.ducami.ducamiproject.infra.log.annotation.target.LogTargetEntity;
+import com.ducami.ducamiproject.infra.log.aop.LogActivityContext;
+import com.ducami.ducamiproject.infra.log.aop.source.LogActivitySource;
+import com.ducami.ducamiproject.infra.log.resolver.DefaultActivityResolver;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.assertj.core.util.introspection.ClassUtils;

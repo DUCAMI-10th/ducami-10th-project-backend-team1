@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.domain.user.resolver;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
-import com.ducami.ducamiproject.global.log.resolver.DefaultActivityResolver;
+import com.ducami.ducamiproject.infra.log.resolver.DefaultActivityResolver;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.exception.UserException;
 import com.ducami.ducamiproject.domain.user.exception.UserStatusCode;
@@ -9,8 +9,6 @@ import com.ducami.ducamiproject.domain.user.repository.UserRepository;
 import com.ducami.ducamiproject.global.exception.exception.ApplicationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

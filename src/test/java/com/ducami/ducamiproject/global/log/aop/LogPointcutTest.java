@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.global.log.aop;
 
 
-import com.ducami.ducamiproject.global.log.annotation.LogActivity;
+import com.ducami.ducamiproject.infra.log.annotation.LogActivity;
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
@@ -9,6 +9,7 @@ import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.domain.user.service.UserServiceImpl;
+import com.ducami.ducamiproject.infra.log.aop.LogPointcut;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

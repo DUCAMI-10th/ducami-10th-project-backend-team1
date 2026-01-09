@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.global.entity;
 
 import com.ducami.ducamiproject.domain.user.domain.UserEntity;
-import com.ducami.ducamiproject.global.log.entity.Actor;
+import com.ducami.ducamiproject.infra.log.entity.Actor;
 
 public class UserActor extends Actor {
 
