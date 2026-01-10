@@ -13,7 +13,7 @@ import org.springframework.util.ClassUtils;
 import java.lang.reflect.Method;
 import java.util.*;
 
-    public abstract class DefaultActivityResolver implements LogActivityResolver {
+public abstract class DefaultActivityResolver implements LogActivityResolver {
         protected static final ParameterNameDiscoverer nameDiscoverer =
                 new DefaultParameterNameDiscoverer();
 

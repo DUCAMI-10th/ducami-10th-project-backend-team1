@@ -24,6 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
 
     @Override
+    @Transactional
     public void signup(String name, String email, String password) {
         userService.checkEmail(email);
 

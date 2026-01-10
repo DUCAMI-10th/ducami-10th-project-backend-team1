@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-@Role(BeanDefinition.ROLE_INFRASTRUCTURE) // Added @Role
 public class LogMessageEnricher extends DefaultContextEnricher {
     private final LogMessageResolver resolver = new SpELMessageResolver();
 

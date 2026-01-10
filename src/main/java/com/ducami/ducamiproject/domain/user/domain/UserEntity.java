@@ -6,12 +6,12 @@ import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -26,6 +26,7 @@ public class UserEntity extends Base {
     @Column
     private String name;
 
+    @Setter
     @Column(name="role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -40,11 +41,6 @@ public class UserEntity extends Base {
     private String major;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
-    private List<AdminLogEntity> logs;
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private List<AdminLogEntity> logs = new ArrayList<>();
 
 }

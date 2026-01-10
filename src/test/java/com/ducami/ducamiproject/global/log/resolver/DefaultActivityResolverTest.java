@@ -5,6 +5,7 @@ import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.infra.log.annotation.LogActivity;
 import com.ducami.ducamiproject.infra.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.infra.log.aop.LogActivityContext;
+import com.ducami.ducamiproject.infra.log.aop.source.AnnotationLogActivitySource;
 import com.ducami.ducamiproject.infra.log.aop.source.LogActivitySource;
 import com.ducami.ducamiproject.infra.log.resolver.DefaultActivityResolver;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -26,8 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class DefaultActivityResolverTest {
 
-    private final DefaultActivityResolver resolver
-            = new DefaultActivityResolver() {
+
+    public static class TestResolver extends DefaultActivityResolver {
         @Override
         public boolean supports(TargetType target) {
             return false;
@@ -42,7 +43,29 @@ class DefaultActivityResolverTest {
         public Map<String, Object> toSnapshot(Object entity) {
             return Map.of();
         }
+
+        public Method getMethod(MethodInvocation invocation, Class<?> targetClass) {
+            return super.getMethod(invocation, targetClass);
+        }
+
+        public Map<String, Object> extractParams(Method method, Object[] args) {
+            return super.extractParams(method, args);
+        }
+
+        public Map<String, Object> getTargetId(Class<?> clazz, Method method, Object[] args) {
+            return  super.getTargetId(clazz, method, args);
+        }
+
+        public Map<String, Object>  getTargetIdInMethod(Method method, Object[] args) {
+            return super.getTargetIdInMethod(method, args);
+        }
+
+        public Class<?> getTargetClass(MethodInvocation invocation) {
+            return super.getTargetClass(invocation);
+        }
     };
+
+    private final TestResolver resolver = new TestResolver();
 
     private static class Advice implements MethodInterceptor {
         private MethodInvocation invocation;
@@ -57,7 +80,7 @@ class DefaultActivityResolverTest {
 
         @Override
         public Object invoke(MethodInvocation invocation) throws Throwable {
-            logActivity = LogActivitySource.getLogActivity(invocation.getMethod());
+            logActivity = AnnotationLogActivitySource.getLogActivity(invocation.getMethod());
             this.invocation = invocation;
             return invocation.proceed();
         }

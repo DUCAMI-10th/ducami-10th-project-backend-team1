@@ -10,7 +10,6 @@ import java.util.Map;
 @Getter
 @Setter
 @Builder
-@ToString
 public class LogActivityContext {
     private TargetType target;
     private AdminAction action;
