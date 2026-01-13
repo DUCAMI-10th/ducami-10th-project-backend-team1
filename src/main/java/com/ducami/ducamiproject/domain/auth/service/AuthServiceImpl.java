@@ -1,13 +1,10 @@
 package com.ducami.ducamiproject.domain.auth.service;
 
 import com.ducami.ducamiproject.domain.auth.dto.response.LoginResponse;
-import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
-import com.ducami.ducamiproject.domain.user.exception.UserException;
-import com.ducami.ducamiproject.domain.user.exception.UserStatusCode;
 import com.ducami.ducamiproject.domain.user.service.UserService;
 import com.ducami.ducamiproject.global.security.jwt.JwtProvider;
 import jakarta.transaction.Transactional;

@@ -1,6 +1,6 @@
 package com.ducami.ducamiproject.domain.user.service;
 
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.repository.UserRepository;
 import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import lombok.RequiredArgsConstructor;

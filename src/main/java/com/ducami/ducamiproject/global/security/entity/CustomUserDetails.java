@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.global.security.entity;
 
 
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

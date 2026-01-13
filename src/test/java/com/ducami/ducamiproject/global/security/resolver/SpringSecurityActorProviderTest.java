@@ -1,7 +1,7 @@
 package com.ducami.ducamiproject.global.security.resolver;
 
 
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.UserActor;
 import com.ducami.ducamiproject.global.security.AuthenticationHelper;

@@ -2,10 +2,7 @@ package com.ducami.ducamiproject.global.security.jwt;
 
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
-import com.ducami.ducamiproject.domain.user.enums.UserRole;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
 import com.ducami.ducamiproject.domain.user.service.CustomUserDetailsService;
-import com.ducami.ducamiproject.global.security.entity.CustomUserDetails;
 import com.ducami.ducamiproject.global.security.jwt.enums.TokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

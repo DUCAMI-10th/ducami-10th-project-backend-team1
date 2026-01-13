@@ -4,7 +4,7 @@ import com.ducami.ducamiproject.infra.log.annotation.LogActivity;
 import com.ducami.ducamiproject.infra.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 

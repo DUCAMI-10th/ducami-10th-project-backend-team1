@@ -1,6 +1,6 @@
-package com.ducami.ducamiproject.domain.user.domain;
+package com.ducami.ducamiproject.domain.user.entity;
 
-import com.ducami.ducamiproject.domain.admin.log.domain.AdminLogEntity;
+import com.ducami.ducamiproject.domain.admin.log.entity.AdminLogEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
@@ -21,7 +21,7 @@ public class UserEntity extends Base {
     private String password;
 
     @Column
-    private Integer grade;
+    private int grade;
 
     @Column
     private String name;
@@ -35,7 +35,7 @@ public class UserEntity extends Base {
     private String email;
 
     @Column
-    private Integer generation;
+    private int generation;
 
     @Column
     private String major;

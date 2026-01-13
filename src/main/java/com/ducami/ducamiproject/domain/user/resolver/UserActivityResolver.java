@@ -2,7 +2,7 @@ package com.ducami.ducamiproject.domain.user.resolver;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.infra.log.resolver.DefaultActivityResolver;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.exception.UserException;
 import com.ducami.ducamiproject.domain.user.exception.UserStatusCode;
 import com.ducami.ducamiproject.domain.user.repository.UserRepository;

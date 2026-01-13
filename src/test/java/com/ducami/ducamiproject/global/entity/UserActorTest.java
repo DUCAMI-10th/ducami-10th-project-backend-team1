@@ -1,6 +1,6 @@
 package com.ducami.ducamiproject.global.entity;
 
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;

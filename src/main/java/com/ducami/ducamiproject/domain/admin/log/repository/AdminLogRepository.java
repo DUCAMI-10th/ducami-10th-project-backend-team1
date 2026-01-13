@@ -1,6 +1,6 @@
 package com.ducami.ducamiproject.domain.admin.log.repository;
 
-import com.ducami.ducamiproject.domain.admin.log.domain.AdminLogEntity;
+import com.ducami.ducamiproject.domain.admin.log.entity.AdminLogEntity;
 import com.ducami.ducamiproject.domain.admin.log.dto.response.AdminLogResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

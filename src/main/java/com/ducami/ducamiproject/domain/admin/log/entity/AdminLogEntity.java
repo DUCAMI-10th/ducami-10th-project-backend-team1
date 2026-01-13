@@ -1,7 +1,7 @@
-package com.ducami.ducamiproject.domain.admin.log.domain;
+package com.ducami.ducamiproject.domain.admin.log.entity;
 
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
-import com.ducami.ducamiproject.domain.user.domain.UserEntity;
+import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
