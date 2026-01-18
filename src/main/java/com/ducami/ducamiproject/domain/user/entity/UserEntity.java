@@ -1,13 +1,9 @@
 package com.ducami.ducamiproject.domain.user.entity;
 
-import com.ducami.ducamiproject.domain.admin.log.entity.AdminLogEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +17,13 @@ public class UserEntity extends Base {
     private String password;
 
     @Column
-    private int grade;
+    private Integer grade;
+
+    @Column
+    private Integer classNumber;
+
+    @Column
+    private Integer number;
 
     @Column
     private String name;
@@ -35,12 +37,25 @@ public class UserEntity extends Base {
     private String email;
 
     @Column
-    private int generation;
+    private Integer generation;
 
-    @Column
-    private String major;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
-    private List<AdminLogEntity> logs = new ArrayList<>();
+    public void setStudentId(String studentId) {
+        if (studentId.isBlank() || studentId.length() != 4 || studentId.startsWith("0")) {
+            throw new IllegalArgumentException("Invalid student id: " + studentId);
+        }
+        grade = Integer.parseInt(studentId.substring(0, 1));
+        classNumber = Integer.parseInt(studentId.substring(1, 2));
+        number = Integer.parseInt(studentId.substring(2));
+    }
+
+    public String getStudentId() {
+        try {
+            return "" + grade + classNumber + number;
+        }
+        catch (NullPointerException e) {
+            return null;
+        }
+    }
 
 }
