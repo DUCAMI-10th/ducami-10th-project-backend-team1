@@ -24,14 +24,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void checkEmail(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new AuthException(AuthStatusCode.ALREADY_EXISTS);
+            throw new AuthException(AuthStatusCode.ALREADY_EXISTS_EMAIL);
         }
     }
 
     @Override
     public void checkUsername(String username) {
         if (userRepository.existsByUsername(username)) {
-            throw new AuthException(AuthStatusCode.ALREADY_EXISTS);
+            throw new AuthException(AuthStatusCode.ALREADY_EXISTS_USERNAME);
         }
     }
 
@@ -50,7 +50,9 @@ public class UserServiceImpl implements UserService {
     public void updateUser(String username, UpdateUserRequest request) {
         UserEntity user = findByUsername(username)
                 .orElseThrow(() -> new UserException(UserStatusCode.NOT_FOUND));
-
+        if (request.email() != null && !user.getEmail().equals(request.email())) {
+            checkEmail(request.email());
+        }
         user.updateUserInfo(request);
     }
 

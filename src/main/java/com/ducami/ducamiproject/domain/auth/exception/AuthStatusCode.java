@@ -15,8 +15,8 @@ public enum AuthStatusCode implements StatusCode {
   INVALID_CREDENTIALS("INVALID_CREDENTIALS", "아이디 또는 비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED),
   ACCOUNT_LOCKED("ACCOUNT_LOCKED", "계정이 잠겨 있습니다.", HttpStatus.UNAUTHORIZED),
   ACCOUNT_DISABLED("ACCOUNT_DISABLED", "계정이 비활성화되었습니다.", HttpStatus.UNAUTHORIZED),
-
-  ALREADY_EXISTS("ALREADY_EXISTS", "이미 가입된 사용자입니다.", HttpStatus.CONFLICT),
+  ALREADY_EXISTS_EMAIL("ALREADY_EXISTS_EMAIL", "이미 사용중인 이메일 주소입니다.", HttpStatus.CONFLICT),
+  ALREADY_EXISTS_USERNAME("ALREADY_EXISTS_USERNAME", "이미 사용중인 아이디입니다.", HttpStatus.CONFLICT),
 
   UNAUTHORIZED("UNAUTHORIZED", "인증이 필요합니다.", HttpStatus.UNAUTHORIZED),
   ACCESS_DENIED("ACCESS_DENIED", "접근 권한이 없습니다.",  HttpStatus.FORBIDDEN),

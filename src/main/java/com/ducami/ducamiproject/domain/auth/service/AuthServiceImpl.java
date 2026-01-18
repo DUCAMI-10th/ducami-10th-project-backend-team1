@@ -2,12 +2,16 @@ package com.ducami.ducamiproject.domain.auth.service;
 
 import com.ducami.ducamiproject.domain.auth.dto.request.SignupRequest;
 import com.ducami.ducamiproject.domain.auth.dto.response.LoginResponse;
+import com.ducami.ducamiproject.domain.auth.dto.response.RefreshResponse;
 import com.ducami.ducamiproject.domain.auth.exception.AuthException;
 import com.ducami.ducamiproject.domain.auth.exception.AuthStatusCode;
 import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.domain.user.service.UserService;
+import com.ducami.ducamiproject.global.security.jwt.JwtExtract;
 import com.ducami.ducamiproject.global.security.jwt.JwtProvider;
+import com.ducami.ducamiproject.global.security.jwt.enums.TokenType;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final JwtExtract jwtExtract;
     private final UserService userService;
 
     @Override
@@ -38,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void signup(SignupRequest request) {
         userService.checkUsername(request.username());
+        userService.checkEmail(request.email());
 
         UserEntity user = UserEntity.builder()
             .name(request.name())
@@ -64,6 +70,18 @@ public class AuthServiceImpl implements AuthService {
         String access = jwtProvider.generateAccessToken(username, user.getRole());
         String refresh = jwtProvider.generateRefreshToken(username, user.getRole());
         return new LoginResponse(user.getId(), access, refresh);
+    }
+
+    @Override
+    public RefreshResponse refresh(String refreshToken) {
+        Claims claims = jwtProvider.getClaims(refreshToken).getPayload();
+        jwtExtract.checkTokenType(claims, TokenType.REFRESH);
+
+        UserEntity user = userService.findByUsername(claims.getSubject())
+            .orElseThrow(() -> new AuthException(AuthStatusCode.INVALID_CREDENTIALS));
+        return new RefreshResponse(
+            jwtProvider.generateAccessToken(claims.getSubject(), user.getRole())
+        );
     }
 
 
