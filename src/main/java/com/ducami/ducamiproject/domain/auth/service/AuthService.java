@@ -6,8 +6,6 @@ import com.ducami.ducamiproject.domain.auth.dto.response.RefreshResponse;
 
 public interface AuthService {
 
-    void signup(String name, String email, String password);
-
     void signup(SignupRequest request);
 
     LoginResponse login(String username, String password);

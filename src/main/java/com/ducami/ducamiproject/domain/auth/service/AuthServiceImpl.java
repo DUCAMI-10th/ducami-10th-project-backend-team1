@@ -28,25 +28,11 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
 
     @Override
-    public void signup(String name, String email, String password) {
-        userService.checkEmail(email);
-
-        UserEntity user = UserEntity.builder()
-                .name(name)
-                .password(passwordEncoder.encode(password))
-                .email(email)
-                .role(UserRole.ROLE_USER)
-                .build();
-        userService.save(user);
-    }
-
-    @Override
     public void signup(SignupRequest request) {
         userService.checkUsername(request.username());
         userService.checkEmail(request.email());
 
         UserEntity user = UserEntity.builder()
-            .name(request.name())
             .password(passwordEncoder.encode(request.password()))
             .email(request.email())
             .username(request.username())

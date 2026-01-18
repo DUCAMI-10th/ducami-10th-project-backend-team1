@@ -20,9 +20,6 @@ public class UserEntity extends Base {
     @Column
     private Integer grade;
 
-    @Column
-    private String name;
-
     @Column(unique = true, nullable = false)
     private String username;
 
