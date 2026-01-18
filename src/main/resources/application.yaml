@@ -1,4 +1,6 @@
 spring:
+  main:
+    lazy-initialization: true
   config:
     import: optional:file:.env[.properties]
 
@@ -12,10 +14,16 @@ spring:
     password: ${DB_PASSWORD:?DB_PASSWORD missing}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jwt:
+    secret-key: ${JWT_SECRET_KEY:?JWT_SECRET_KEY missing}
+    access-expiration: 900000
+    refresh-expiration: 2592000000
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true

@@ -1,0 +1,10 @@
+package com.ducami.ducamiproject.domain.admin.log.service;
+
+import com.ducami.ducamiproject.domain.admin.log.dto.response.AdminLogResponse;
+import org.springframework.data.domain.Page;
+
+public interface AdminLogService {
+
+    Page<AdminLogResponse> findAll(int page, int size);
+
+}
