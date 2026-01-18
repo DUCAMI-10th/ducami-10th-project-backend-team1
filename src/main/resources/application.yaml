@@ -16,8 +16,8 @@ spring:
 
   jwt:
     secret-key: ${JWT_SECRET_KEY:?JWT_SECRET_KEY missing}
-    access-expiration: 6000000000
-    refresh-expiration: 600000000
+    access-expiration: 900000
+    refresh-expiration: 2592000000
 
   jpa:
     hibernate:
