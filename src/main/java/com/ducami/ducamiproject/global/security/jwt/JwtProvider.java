@@ -30,7 +30,7 @@ public class JwtProvider {
 
     public Jws<Claims> getClaims(String token) {
         try {
-            return Jwts.parser(). // parser 수정
+            return Jwts.parser().
                     verifyWith(key)
                     .build()
                     .parseSignedClaims(token);
@@ -46,13 +46,13 @@ public class JwtProvider {
         }
     }
 
-    public String generateToken(TokenType tokenType, String email, UserRole role, long expiration) {
+    public String generateToken(TokenType tokenType, String username, UserRole role, long expiration) {
         Instant now = Instant.now();
         return Jwts.builder()
                 .header()
                 .type("JWT")
                 .and()
-                .subject(email)
+                .subject(username)
                 .claim("token_type", tokenType.name())
                 .claim("authority", role.name())
                 .issuedAt(Date.from(now))
@@ -61,12 +61,12 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String generateAccessToken(String email, UserRole role) {
-        return generateToken(TokenType.ACCESS, email, role, jwtProperties.getAccessExpiration());
+    public String generateAccessToken(String username, UserRole role) {
+        return generateToken(TokenType.ACCESS, username, role, jwtProperties.getAccessExpiration());
     }
 
-    public String generateRefreshToken(String email, UserRole role) {
-        return generateToken(TokenType.REFRESH, email, role, jwtProperties.getRefreshExpiration());
+    public String generateRefreshToken(String username, UserRole role) {
+        return generateToken(TokenType.REFRESH, username, role, jwtProperties.getRefreshExpiration());
     }
 
 }

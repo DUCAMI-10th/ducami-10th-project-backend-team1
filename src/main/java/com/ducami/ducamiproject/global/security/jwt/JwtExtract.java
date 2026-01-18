@@ -29,9 +29,7 @@ public class JwtExtract {
     public Authentication getAuthentication(final String token) {
         final Jws<Claims> jws = jwtProvider.getClaims(token);
         final Claims claims = jws.getPayload();
-        if (!checkTokenType(claims, TokenType.ACCESS)) {
-            throw new AuthException(AuthStatusCode.INVALID_TOKEN_TYPE);
-        }
+        checkTokenType(claims, TokenType.ACCESS);
         final UserDetails details = customUserDetailsService.loadUserByUsername(claims.getSubject());
 
         return new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
@@ -46,8 +44,10 @@ public class JwtExtract {
     }
 
 
-    public boolean checkTokenType(final Claims claims, final TokenType tokenType) { //TODO: 바로 exception 날리도록 수정
-        return claims.get("token_type").equals(tokenType.toString());
+    public void checkTokenType(final Claims claims, final TokenType tokenType) {
+        if (!claims.get("token_type").equals(tokenType.toString())) {
+            throw new AuthException(AuthStatusCode.INVALID_TOKEN_TYPE);
+        }
     }
 
 }

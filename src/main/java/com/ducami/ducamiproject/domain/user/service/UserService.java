@@ -1,5 +1,6 @@
 package com.ducami.ducamiproject.domain.user.service;
 
+import com.ducami.ducamiproject.domain.user.dto.request.UpdateUserRequest;
 import com.ducami.ducamiproject.infra.log.annotation.LogActivity;
 import com.ducami.ducamiproject.infra.log.annotation.target.LogTargetEntity;
 import com.ducami.ducamiproject.domain.admin.log.enums.AdminAction;
@@ -7,12 +8,15 @@ import com.ducami.ducamiproject.domain.admin.log.enums.TargetType;
 import com.ducami.ducamiproject.domain.user.entity.UserEntity;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
+import jakarta.validation.Valid;
 
 import java.util.Optional;
 
 public interface UserService {
 
     void checkEmail(String email);
+
+    void checkUsername(String username);
 
     Optional<UserEntity> findByEmail(String email);
 
@@ -27,4 +31,7 @@ public interface UserService {
     )
     void updateUserRole(@LogTargetEntity("user") Long id, UserRole userRole);
 
+    Optional<UserEntity> findByUsername(String username);
+
+    void updateUser(String username, @Valid UpdateUserRequest request);
 }

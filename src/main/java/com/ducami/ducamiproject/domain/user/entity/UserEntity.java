@@ -1,5 +1,6 @@
 package com.ducami.ducamiproject.domain.user.entity;
 
+import com.ducami.ducamiproject.domain.user.dto.request.UpdateUserRequest;
 import com.ducami.ducamiproject.domain.user.enums.UserRole;
 import com.ducami.ducamiproject.global.entity.Base;
 import jakarta.persistence.*;
@@ -20,13 +21,16 @@ public class UserEntity extends Base {
     private Integer grade;
 
     @Column
+    private String name;
+
+    @Column
+    private String username;
+
+    @Column
     private Integer classNumber;
 
     @Column
     private Integer number;
-
-    @Column
-    private String name;
 
     @Setter
     @Column(name="role", nullable = false)
@@ -58,4 +62,9 @@ public class UserEntity extends Base {
         }
     }
 
+    public void updateUserInfo(UpdateUserRequest request) {
+        if (request.email() != null) {email = request.email();}
+        if (request.generation() != null) {generation = request.generation();}
+        if (request.studentId() != null) {setStudentId(request.studentId());}
+    }
 }

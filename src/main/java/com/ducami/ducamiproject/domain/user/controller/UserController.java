@@ -1,5 +1,6 @@
 package com.ducami.ducamiproject.domain.user.controller;
 
+import com.ducami.ducamiproject.domain.user.dto.request.UpdateUserRequest;
 import com.ducami.ducamiproject.domain.user.dto.request.UpdateUserRoleRequest;
 import com.ducami.ducamiproject.domain.user.dto.response.UserInfoResponse;
 import com.ducami.ducamiproject.domain.user.service.UserService;
@@ -31,6 +32,15 @@ public class UserController {
     ) {
         userService.updateUserRole(id, request.role());
         return ApiResponse.ok("권한이 성공적으로 변경되었습니다.");
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<ApiResponse<String>> updateUserInfo(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody @Valid UpdateUserRequest request
+    ) {
+        userService.updateUser(userDetails.getUsername(), request);
+        return ApiResponse.ok("유저정보가 성공적으로 변경되었습니다.");
     }
 
 }

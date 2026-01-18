@@ -9,22 +9,20 @@ import lombok.Getter;
 @Getter
 public class UserInfoResponse {
     Long id;
-    String name;
+    String username;
     String email;
-    Integer grade;
     Integer generation;
-    String major;
     UserRole role;
+    String studentId;
 
     public static UserInfoResponse from(UserEntity entity) {
         return new UserInfoResponse(
                 entity.getId(),
-                entity.getName(),
+                entity.getUsername(),
                 entity.getEmail(),
-                entity.getGrade(),
                 entity.getGeneration(),
-                entity.getMajor(),
-                entity.getRole()
+                entity.getRole(),
+                entity.getStudentId()
         );
     }
 }

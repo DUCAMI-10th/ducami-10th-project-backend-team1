@@ -18,13 +18,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<String>> signup(@RequestBody @Valid SignupRequest request) {
-        authService.signup(request.name(), request.email(), request.password());
+        authService.signup(request);
         return ApiResponse.created("정상적으로 가입되었습니다.");
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Valid LoginRequest request) {
-        return ApiResponse.ok(authService.login(request.email(), request.password()));
+        return ApiResponse.ok(authService.login(request.username(), request.password()));
     }
 
 
